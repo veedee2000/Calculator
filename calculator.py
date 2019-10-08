@@ -74,6 +74,8 @@ display.grid(row=1,columnspan=6,sticky=W+E)
 # Row starts from 1
 # Column starts from 0
 
+# Using lambda with the function ensures function not getting exuted before being clicked
+
 Button(root,text="1",command = lambda :get_variables(1)).grid(row=2,column=0)
 Button(root,text="2",command = lambda :get_variables(2)).grid(row=2,column=1)
 Button(root,text="3",command = lambda :get_variables(3)).grid(row=2,column=2)
