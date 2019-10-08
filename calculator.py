@@ -5,6 +5,7 @@ root = Tk()
 root.title('Calculator')
 
 #get the user input and place it in the textfield
+
 i = 0
 def get_variables(num):
     global i
@@ -12,7 +13,7 @@ def get_variables(num):
     i+=1
 
 def calculate():
-    entire_string = display.get()
+    entire_string = display.get()  # The entire string is taken from the input field
     try:
         a = parser.expr(entire_string).compile()
         result = eval(a)
@@ -30,7 +31,7 @@ def get_operation(operator):
 
 
 def clear_all():
-    display.delete(0,END)
+    display.delete(0,END)  # delete function takes the beginning and end parameters
 
 def undo():
     entire_string = display.get()
@@ -38,15 +39,40 @@ def undo():
         new_string = entire_string[:-1]
         clear_all()
         display.insert(0,new_string)
-    else:
-        clear_all()
-        display.insert(0,"Error")
+
+def factorial():
+    calculate()
+    check = 1
+    try :
+        int(display.get())
+    except :
+        check = 0
+
+    if float(display.get()) > 0 and check :
+        fact = 1
+        for i in range(float(display.get())) :
+            fact = fact * (i + 1)
+        display.delete(0,END)
+        display.insert(0,fact)
+
+    elif float(display.get()) == 0 :
+        display.delete(0,END)
+        display.insert(0,'1')
+
+    else :
+        display.delete(0,END)
+        display.insert(0,'Sorry invalid!!')
 
 #adding the input field
-display = Entry(root)
+
+display = Entry(root)   # Creating display object for input field
 display.grid(row=1,columnspan=6,sticky=W+E)
 
 #adding buttons to the calculator
+
+#Syntax to feed into command needs (lambda :*function_name*(*arguments*)).grid(*rows and columns*)
+# Row starts from 1
+# Column starts from 0
 
 Button(root,text="1",command = lambda :get_variables(1)).grid(row=2,column=0)
 Button(root,text="2",command = lambda :get_variables(2)).grid(row=2,column=1)
@@ -61,26 +87,26 @@ Button(root,text="8",command = lambda :get_variables(8)).grid(row=4,column=1)
 Button(root,text="9",command = lambda :get_variables(9)).grid(row=4,column=2)
 
 #adding other buttons to the calculator
-Button(root,text="AC",command=lambda :clear_all()).grid(row=5,column=0)
+
+Button(root,text="AC",command = lambda :clear_all()).grid(row=5,column=0)
 Button(root,text="0",command = lambda :get_variables(0)).grid(row=5,column=1)
-Button(root,text="=",command=lambda :calculate()).grid(row=5,column=2)
+Button(root,text="=",command = lambda :calculate()).grid(row=5,column=2)
 
-
-Button(root,text="+",command= lambda :get_operation("+")).grid(row=2,column=3)
-Button(root,text="-",command= lambda :get_operation("-")).grid(row=3,column=3)
-Button(root,text="*",command= lambda :get_operation("*")).grid(row=4,column=3)
-Button(root,text="/",command= lambda :get_operation("/")).grid(row=5,column=3)
+Button(root,text="+",command = lambda :get_operation("+")).grid(row=2,column=3)
+Button(root,text="-",command = lambda :get_operation("-")).grid(row=3,column=3)
+Button(root,text="*",command = lambda :get_operation("*")).grid(row=4,column=3)
+Button(root,text="/",command = lambda :get_operation("/")).grid(row=5,column=3)
 
 # adding new operations
-Button(root,text="pi",command= lambda :get_operation("*3.14")).grid(row=2,column=4)
-Button(root,text="%",command= lambda :get_operation("%")).grid(row=3,column=4)
-Button(root,text="(",command= lambda :get_operation("(")).grid(row=4,column=4)
-Button(root,text="exp",command= lambda :get_operation("**")).grid(row=5,column=4)
+Button(root,text="pi",command = lambda :get_operation("*3.14")).grid(row=2,column=4)
+Button(root,text="%",command = lambda :get_operation("%")).grid(row=3,column=4)
+Button(root,text="(",command = lambda :get_operation("(")).grid(row=4,column=4)
+Button(root,text="exp",command = lambda :get_operation("**")).grid(row=5,column=4)
 
-Button(root,text="<-",command= lambda :undo()).grid(row=2,column=5)
-Button(root,text="x!").grid(row=3,column=5)
-Button(root,text=")",command= lambda :get_operation(")")).grid(row=4,column=5)
-Button(root,text="^2",command= lambda :get_operation("**2")).grid(row=5,column=5)
+Button(root,text="<-",command = lambda :undo()).grid(row=2,column=5)
+Button(root,text="x!",command = lambda :factorial()).grid(row=3,column=5)
+Button(root,text=")",command = lambda :get_operation(")")).grid(row=4,column=5)
+Button(root,text="^2",command = lambda :get_operation("**2")).grid(row=5,column=5)
 
 
-root.mainloop()
+root.mainloop()  # For the screen to be present till not cancelled
